@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<!--<html>
+<head>
+</head>
+<body>
+<div class="zc_class" id="copy_initiator">Click me to Copy Text!</div>
+    
+<script src="ZeroClipboard.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+  var clip = new ZeroClipboard( document.getElementById("copy_initiator"), {
+  moviePath: "ZeroClipboard.swf"
+} );
+
+//this event happens upon initiating the copy 
+clip.on( 'dataRequested', function ( client, args ) {
+    clip.setText( "whatever text you want");
+} );
+
+//this event happens upon the copy finishing
+clip.on( 'complete', function(client, args) {
+  alert("Copied text to clipboard: " + args.text );
+} );
+
+</script>
+</body>
+</html>-->
+
+<head>
+    <!-- !!! USE VERSION 1.3.5 !!! -->
+    <!-- http://cdnjs.com/libraries/zeroclipboard/1.3.5 -->
+    <!-- from http://zeroclipboard.org -->
+    
+    <!-- TODO: get jquery from google -->
+    <script src="http://code.jquery.com/jquery-1.8.2.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var clip = new ZeroClipboard($('.copy_class'), { moviePath: "ZeroClipboard.swf" });
+            clip.on('mousedown', function(client, args) {
+                switch(this.id) {
+                    case 'button_1':
+                        clip.setText('Text for button 1');
+                        break;
+                    case 'button_2':
+                        clip.setText('Text for button 2');
+                        break;
+                    case 'text':
+                        clip.setText($("#text").html());
+                        break;
+                    default:
+                        // automatically copies the right Text from every DOM Element (e.g. button, textfield)
+                        
+                        // $( "#foo" )[ 0 ]; // Equivalent to document.getElementById( "foo" )
+                        // $( "#foo" ).get( 0 ); // Identical to above, only slower.
+                        
+                        // var domElement = $( this ).get( 0 );
+                        var domElement = $( this )[ 0 ];
+                        clip.setText(domElement.innerHTML);
+                        break;
+                }
+            });
+            
+            // use this if you want show an alert of the text that has been copied
+            var showMsg = false;
+            if(showMsg) {
+                clip.on( 'complete', function(client, args) {
+                    alert("Copied text to clipboard: " + args.text );
+                } );
+            }
+        });
+    </script>
+</head>
+<body>
+    <button id="button_1" class="copy_class" >Button 1</button>
+    <button id="button_2" class="copy_class" >Button 2</button>
+    
+    <div id="text" class="copy_class">Hello</div>
+    
+    <p id="none" class="copy_class">Hello world</p>
+    <p class="copy_class">Next line</p>
+    
+    <!-- use ZeroClipboard.min.js for less traffic! -->
+    <script type="text/javascript" src="ZeroClipboard.js"></script>
+</body>
+</html>
